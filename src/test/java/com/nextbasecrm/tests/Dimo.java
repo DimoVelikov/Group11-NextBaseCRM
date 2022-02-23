@@ -28,6 +28,8 @@ public class Dimo {
     @Test
     public void CY_11_7() {
 
+        // 1. Users can select one answer and click the “VOTE” button to vote for a poll.
+
 
         driver.get("https://login2.nextbasecrm.com/");
 
