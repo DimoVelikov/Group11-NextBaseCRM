@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="CRM-Automation" />
         <module name="Group11-NextBaseCRM" />
       </profile>
     </annotationProcessing>
