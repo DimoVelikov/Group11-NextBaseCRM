@@ -42,7 +42,7 @@ public class US_5_SendTextMessage {
     @Test
     public void AC1_userWrite_SendMessageSuccessfullyFunction() {
 
-        // 1 STEP: user go to login page
+        // STEP 1: user go to login page
         driver.get("https://login.nextbasecrm.com/");
 
         WebElement usernameInput = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
@@ -69,11 +69,11 @@ public class US_5_SendTextMessage {
 
         Assert.assertEquals(actualModuleText, expectedModuleText);
 
-        // 2 STEP: click the "MESSAGE" tab / module
+        // STEP 2: click the "MESSAGE" tab / module
         messageModule.click();
 
 
-        // user should be able to write the message in the drop message body
+        // STEP 3: user should be able to write the message in the drop message body
         driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
 
         WebElement textField = driver.findElement(By.xpath("//body[@contenteditable='true']"));
@@ -85,7 +85,7 @@ public class US_5_SendTextMessage {
 
         driver.switchTo().defaultContent();
 
-        // click "SEND" button
+        // STEP 4: click "SEND" button
         WebElement sendButton = driver.findElement(By.xpath("(//button[@class='ui-btn ui-btn-lg ui-btn-primary'])[1]"));
         sendButton.click();
 
@@ -108,7 +108,7 @@ public class US_5_SendTextMessage {
     @Test
     public void AC2_sendMessageWithoutContentFunction() throws InterruptedException {
 
-        // 1 STEP: user go to login page
+        // STEP 1: user go to login page
         driver.get("https://login.nextbasecrm.com/");
 
         WebElement usernameInput = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
@@ -135,10 +135,10 @@ public class US_5_SendTextMessage {
 
         Assert.assertEquals(actualModuleText, expectedModuleText);
 
-        // 2 STEP: click the "MESSAGE" tab / module
+        // STEP 2: click the "MESSAGE" tab / module
         messageModule.click();
 
-        // click "SEND" button
+        // STEP 3: click "SEND" button
         WebElement sendButton = driver.findElement(By.xpath("//button[@id='blog-submit-button-save']"));
         Thread.sleep(1000);
         sendButton.click();
