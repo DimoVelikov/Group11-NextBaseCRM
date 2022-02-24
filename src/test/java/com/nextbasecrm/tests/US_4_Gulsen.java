@@ -8,6 +8,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 //US : As a user, I want to see all the options under the user profile.
@@ -31,10 +34,6 @@ public class US_4_Gulsen {
         driver = WebDriverFactory.getDriver("chrome");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
-
-    @Test
-    public void verifyTheOptions(){
 
         String userName="hr31@cydeo.com";
         String password="UserUser";
@@ -48,35 +47,27 @@ public class US_4_Gulsen {
 
         WebElement loginButton= driver.findElement(By.xpath("//input[@value='Log In']"));
         loginButton.click();
+    }
 
+    @Test
+    public void verifyTheOptions(){
         WebElement profileModule= driver.findElement(By.xpath("//span[@class='user-name']"));
         profileModule.click();
 
-       WebElement myProfile = driver.findElement(By.xpath("//*[@id='popup-window-content-menu-popup-user-menu']/div/div/a[1]/span[2]"));
-       String actualMyProfileText = myProfile.getText();
-       String expectedMyProfileText = "My Profile";
-        Assert.assertTrue(actualMyProfileText.equals(expectedMyProfileText));
+        WebElement module;
+        ArrayList<String> actualText = new ArrayList<>();
+        ArrayList<String> expectedText = new ArrayList<>(Arrays.asList("My Profile","Edit Profile Settings","Themes","Configure notifications","Logout"));
+        for (int i = 1; i <=5 ; i++) {
+            module=driver.findElement(By.xpath("(//div[@class='menu-popup-items'])/*["+i+"]/*[2]"));
 
-       WebElement editProfileSetting =driver.findElement(By.xpath("//*[@id='popup-window-content-menu-popup-user-menu']/div/div/a[2]/span[2]"));
-       String actualEditProfileSettingText = editProfileSetting.getText();
-       String expectedEditProfileSettingText="Edit Profile Settings";
-       Assert.assertTrue(actualEditProfileSettingText.equals(expectedEditProfileSettingText));
-
-       WebElement themes = driver.findElement(By.xpath("//*[@id='popup-window-content-menu-popup-user-menu']/div/div/span[1]/span[2]"));
-       String actualThemesText= themes.getText();
-       String expectedThemesText="Themes";
-       Assert.assertTrue(actualThemesText.equals(expectedThemesText));
+            actualText.add(module.getText());
 
 
-      WebElement configureNotifications = driver.findElement(By.xpath("//*[@id='popup-window-content-menu-popup-user-menu']/div/div/span[2]/span[2]"));
-      String actualConfigureNotificationsText = configureNotifications.getText();
-      String expectedConfigureNotificationsText="Configure notifications";
-      Assert.assertTrue(actualConfigureNotificationsText.equals(expectedConfigureNotificationsText));
+        }
+        System.out.println("expectedText = " + expectedText);
+        System.out.println("actualText = " + actualText);
+        Assert.assertTrue(actualText.equals(expectedText));
 
-      WebElement logout = driver.findElement(By.xpath("//*[@id='popup-window-content-menu-popup-user-menu']/div/div/a[3]/span[2]"));
-      String actualLogoutText=logout.getText();
-      String expectedLogoutText="Logout";
-      Assert.assertTrue(actualLogoutText.equals(expectedLogoutText));
 
 
     }
