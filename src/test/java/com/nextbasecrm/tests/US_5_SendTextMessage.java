@@ -1,5 +1,6 @@
 package com.nextbasecrm.tests;
 
+import com.nextbasecrm.utilities.CRM_utilities;
 import com.nextbasecrm.utilities.WebDriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,38 +31,29 @@ public class US_5_SendTextMessage {
         driver = WebDriverFactory.getDriver("chrome");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get("https://login.nextbasecrm.com/");
+        CRM_utilities.crm_login(driver, "hr31@cybertekschool.com", "UserUser");
 
     }
 
     @AfterMethod
     public void tearDownMethod() {
-        //   driver.quit();
+          driver.quit();
     }
 
 
     @Test
     public void AC1_userWrite_SendMessageSuccessfullyFunction() {
 
-        // STEP 1: user go to login page
-        driver.get("https://login.nextbasecrm.com/");
+        // STEP 1: user go to homepage
 
-        WebElement usernameInput = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
-        usernameInput.sendKeys("hr31@cybertekschool.com");
-
-        WebElement passwordInput = driver.findElement(By.xpath("//input[@name='USER_PASSWORD']"));
-        passwordInput.sendKeys("UserUser");
-
-        WebElement loginButton = driver.findElement(By.xpath("//input[@type='submit']"));
-        loginButton.click();
-
-        // verify user is on homepage
-        String expectedHomepage = "https://login.nextbasecrm.com";
+        // assert user is on homepage
+        String expectedHomepage = "https://login.nextbasecrm.com/stream/?login=yes";
         String actualHomepage = driver.getCurrentUrl();
 
-        Assert.assertTrue(actualHomepage.contains(expectedHomepage));
+        Assert.assertEquals(actualHomepage, expectedHomepage);
 
         // verify: system should display "MESSAGE" tab / module
-
         WebElement messageModule = driver.findElement(By.xpath("(//span[.='Message'])[1]"));
 
         String expectedModuleText = "MESSAGE";
@@ -69,13 +61,30 @@ public class US_5_SendTextMessage {
 
         Assert.assertEquals(actualModuleText, expectedModuleText);
 
+        // verify text in the 'MESSAGE' body before click the 'MESSAGE' tab / module
+        // expected text: "Send message …"
+        WebElement beforeClickMessageText = driver.findElement(By.xpath("//span[.='Send message …']"));
+
+        String expectedTextInMessageBody = "Send message …";
+        String actualTextInMessageBody = beforeClickMessageText.getText();
+
+        Assert.assertEquals(actualTextInMessageBody, expectedTextInMessageBody);
+        System.out.println("text in the 'MESSAGE' body before click the 'MESSAGE' tab / module = " + beforeClickMessageText.getText());
+
+
         // STEP 2: click the "MESSAGE" tab / module
+
         messageModule.click();
+
+        // Assert after click the "MESSAGE" tab / module the system should drop task message body
+        // and the text in the 'MESSAGE' body is not displayed
+
+        Assert.assertFalse(beforeClickMessageText.isDisplayed());
 
 
         // STEP 3: user should be able to write the message in the drop message body
-        driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
 
+        driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
         WebElement textField = driver.findElement(By.xpath("//body[@contenteditable='true']"));
         textField.sendKeys("Test MESSAGE 1\n" +
                 "\n" +
@@ -84,6 +93,7 @@ public class US_5_SendTextMessage {
                 "Test MESSAGE 3");
 
         driver.switchTo().defaultContent();
+
 
         // STEP 4: click "SEND" button
         WebElement sendButton = driver.findElement(By.xpath("(//button[@class='ui-btn ui-btn-lg ui-btn-primary'])[1]"));
@@ -97,7 +107,7 @@ public class US_5_SendTextMessage {
                 "\n" +
                 "Test MESSAGE 3";
 
-        WebElement sentMessage = driver.findElement(By.xpath("//*[@id=\"blog_post_body_1373\"]"));
+        WebElement sentMessage = driver.findElement(By.xpath("(//div[@class= 'feed-post-text-block-inner-inner'])[1]"));
 
         String actualMessage = sentMessage.getText();
 
@@ -108,23 +118,13 @@ public class US_5_SendTextMessage {
     @Test
     public void AC2_sendMessageWithoutContentFunction() throws InterruptedException {
 
-        // STEP 1: user go to login page
-        driver.get("https://login.nextbasecrm.com/");
-
-        WebElement usernameInput = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
-        usernameInput.sendKeys("hr31@cybertekschool.com");
-
-        WebElement passwordInput = driver.findElement(By.xpath("//input[@name='USER_PASSWORD']"));
-        passwordInput.sendKeys("UserUser");
-
-        WebElement loginButton = driver.findElement(By.xpath("//input[@type='submit']"));
-        loginButton.click();
+        // STEP 1: user go to homepage
 
         // verify user is on homepage
-        String expectedHomepage = "https://login.nextbasecrm.com";
+        String expectedHomepage = "https://login.nextbasecrm.com/stream/?login=yes";
         String actualHomepage = driver.getCurrentUrl();
 
-        Assert.assertTrue(actualHomepage.contains(expectedHomepage));
+        Assert.assertEquals(actualHomepage, expectedHomepage);
 
         // verify: system should display "MESSAGE" tab / module
 
@@ -135,12 +135,13 @@ public class US_5_SendTextMessage {
 
         Assert.assertEquals(actualModuleText, expectedModuleText);
 
+
         // STEP 2: click the "MESSAGE" tab / module
         messageModule.click();
 
-        // STEP 3: click "SEND" button
+
+        // STEP 3: click "SEND" button without entering any text in the "MESSAGE" body
         WebElement sendButton = driver.findElement(By.xpath("//button[@id='blog-submit-button-save']"));
-        Thread.sleep(1000);
         sendButton.click();
 
         // system should display a message on top of the "MESSAGE" tab / module:
