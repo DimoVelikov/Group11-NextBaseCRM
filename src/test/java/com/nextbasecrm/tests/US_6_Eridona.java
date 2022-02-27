@@ -23,7 +23,6 @@ public class US_6_Eridona {
         driver.get("https://login2.nextbasecrm.com/");
     }
 
-
     @Test
     public void taskMore(){
         WebElement loginBox = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
@@ -40,4 +39,13 @@ public class US_6_Eridona {
 
     }
 }
-
+/*
+As a user, I want to see all the options under the MORE tab in the
+homepage.
+Acceptance Criteria:
+1. Four options should be displayed under the MORE tab:
+1. File
+2. Appreciation
+3. Announcement
+4. Workflow
+ */
