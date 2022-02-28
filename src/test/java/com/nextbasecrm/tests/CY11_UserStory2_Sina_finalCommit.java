@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class CY11_UserStory2_Sina {
+public class CY11_UserStory2_Sina_finalCommit {
 
     public WebDriver driver;
 
