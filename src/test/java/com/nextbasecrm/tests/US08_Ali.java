@@ -58,6 +58,7 @@ public class US08_Ali {
         driver.close();
     }
 
+    //-------------------------------- Test with HR Credential-----------------------------------
 
     @Test
     public static void clickAndVarifyChatAndCallsModule() throws InterruptedException{
@@ -85,6 +86,8 @@ public class US08_Ali {
 
     }
 
+    //-------------------------------- Test with HelpDesk Credential-----------------------------------
+
     @Test
     public static void clickAndVarifyChatAndCallsModule2() throws InterruptedException{
         driver.get(getProperty("url"));
@@ -110,6 +113,8 @@ public class US08_Ali {
         Assert.assertEquals(actual, expected);
 
     }
+
+    //-------------------------------- Test with Marketing Credential-----------------------------------
 
     @Test
     public static void clickAndVarifyChatAndCallsModule3() throws InterruptedException{
