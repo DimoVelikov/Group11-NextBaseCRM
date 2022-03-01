@@ -27,7 +27,12 @@ public class WebDriverFactory {
 
     }
 
-}
+
+
+
+    }
+
+
 /*
     WebDriverManager.chromedriver().setup();
     WebDriver driver = new ChromeDriver();
