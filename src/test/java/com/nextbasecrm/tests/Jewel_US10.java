@@ -68,7 +68,10 @@ public class Jewel_US10 {
         String actualPopUpTitle = taskCreatedPopUp.getText();
         Assert.assertEquals(actualPopUpTitle, expectedPopUpContent, "popUp content not match");
 
-
+        //close pop up
+        WebElement closePopUp1 = driver.findElement(By.xpath("//span[@class='popup-window-close-icon']"));
+        closePopUp1.click();
+        Thread.sleep(1000);
 
     }
 
