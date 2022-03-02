@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class Jewel_US10 {
+public class Jewel_US10_TC1 {
 
 
     WebDriver driver;
