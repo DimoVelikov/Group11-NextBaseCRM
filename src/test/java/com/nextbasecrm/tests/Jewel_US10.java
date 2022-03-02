@@ -20,16 +20,13 @@ public class Jewel_US10 {
         driver = WebDriverFactory.getDriver("chrome");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        driver.get("https://login2.nextbasecrm.com");
-    }
+        driver.get("https://login1.nextbasecrm.com");
 
-    @Test
-    public void createTask() throws InterruptedException {
-
+        //log in
         WebElement InputUserName = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
         InputUserName.sendKeys("hr31@cydeo.com"); // passed
-       //  InputUserName.sendKeys("helpdesk31@cybertekschool.com"); //passed
-       // InputUserName.sendKeys("marketing33@cybertekschool.com"); //no popup for task creation
+        //  InputUserName.sendKeys("helpdesk31@cybertekschool.com"); //passed
+        // InputUserName.sendKeys("marketing33@cybertekschool.com"); //no popup for task creation
 
         WebElement InputPassword = driver.findElement(By.xpath("//input[@name='USER_PASSWORD']"));
         InputPassword.sendKeys("UserUser");
@@ -38,10 +35,15 @@ public class Jewel_US10 {
         loginButton.click();
         //----------------------------------------
 
+    }
+
+    @Test
+    public void createTask() throws InterruptedException {
+
         WebElement taskTab = driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-tasks\"]/span"));
         Thread.sleep(2000);
         taskTab.click();
-
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         WebElement taskTitle = driver.findElement(By.xpath("//input[@data-bx-id='task-edit-title']"));
         taskTitle.sendKeys("Task Creation Test Title");
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -54,12 +56,12 @@ public class Jewel_US10 {
         taskContentBody.sendKeys("Task Creation Test Content");
 
         driver.switchTo().parentFrame();
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        // Thread.sleep(1000);
         //click send
         WebElement sendButton = driver.findElement(By.xpath("//button[@id='blog-submit-button-save']"));
         sendButton.click();
-        Thread.sleep(1000);
-
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //-----------------------
 
         //check popup
@@ -69,9 +71,10 @@ public class Jewel_US10 {
         Assert.assertEquals(actualPopUpTitle, expectedPopUpContent, "popUp content not match");
 
         //close pop up
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         WebElement closePopUp1 = driver.findElement(By.xpath("//span[@class='popup-window-close-icon']"));
         closePopUp1.click();
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         //logout
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -84,5 +87,8 @@ public class Jewel_US10 {
 
     }
 
+
 }
+
+
 
