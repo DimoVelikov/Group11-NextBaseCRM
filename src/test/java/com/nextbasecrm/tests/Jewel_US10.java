@@ -73,6 +73,15 @@ public class Jewel_US10 {
         closePopUp1.click();
         Thread.sleep(1000);
 
+        //logout
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        WebElement profileModule = driver.findElement(By.xpath("//div[@id='user-block']"));
+        profileModule.click();
+
+        driver.findElement(By.xpath("//a[.='Log out']")).click();
+
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
     }
 
 }
