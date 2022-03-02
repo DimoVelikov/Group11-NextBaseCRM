@@ -4,6 +4,7 @@ import com.nextbasecrm.utilities.WebDriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -60,6 +61,12 @@ public class Jewel_US10 {
         Thread.sleep(1000);
 
         //-----------------------
+
+        //check popup
+        WebElement taskCreatedPopUp = driver.findElement(By.xpath("//div[@class='feed-create-task-popup-title']"));
+        String expectedPopUpContent = "Task has been created";
+        String actualPopUpTitle = taskCreatedPopUp.getText();
+        Assert.assertEquals(actualPopUpTitle, expectedPopUpContent, "popUp content not match");
 
 
 
