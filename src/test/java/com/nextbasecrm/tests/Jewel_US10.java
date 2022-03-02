@@ -26,15 +26,42 @@ public class Jewel_US10 {
     public void createTask() throws InterruptedException {
 
         WebElement InputUserName = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
-       // InputUserName.sendKeys("hr31@cydeo.com"); // passed
-       // InputUserName.sendKeys("helpdesk31@cybertekschool.com"); //passed
-        InputUserName.sendKeys("marketing33@cybertekschool.com"); //no popup for task creation
+        InputUserName.sendKeys("hr31@cydeo.com"); // passed
+       //  InputUserName.sendKeys("helpdesk31@cybertekschool.com"); //passed
+       // InputUserName.sendKeys("marketing33@cybertekschool.com"); //no popup for task creation
 
         WebElement InputPassword = driver.findElement(By.xpath("//input[@name='USER_PASSWORD']"));
         InputPassword.sendKeys("UserUser");
 
         WebElement loginButton = driver.findElement(By.xpath("//input[@class='login-btn']"));
         loginButton.click();
+        //----------------------------------------
+
+        WebElement taskTab = driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-tasks\"]/span"));
+        Thread.sleep(2000);
+        taskTab.click();
+
+        WebElement taskTitle = driver.findElement(By.xpath("//input[@data-bx-id='task-edit-title']"));
+        taskTitle.sendKeys("Task Creation Test Title");
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        // WebElement taskContent= driver.findElement(By.xpath("//body[@class='template-bitrix24 no-paddings start-page bitrix24-default-theme']"));
+        //driver.switchTo().frame(driver.findElement(By.xpath()));
+
+        //switch to frame
+        driver.switchTo().frame(driver.findElement(By.xpath("(//iframe[@class='bx-editor-iframe'])[2]")));
+        WebElement taskContentBody = driver.findElement(By.xpath("//body")); // role of this line ?
+        taskContentBody.sendKeys("Task Creation Test Content");
+
+        driver.switchTo().parentFrame();
+        Thread.sleep(1000);
+        //click send
+        WebElement sendButton = driver.findElement(By.xpath("//button[@id='blog-submit-button-save']"));
+        sendButton.click();
+        Thread.sleep(1000);
+
+        //-----------------------
+
+
 
     }
 
